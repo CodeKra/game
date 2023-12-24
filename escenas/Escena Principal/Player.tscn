@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://csnw3fffwyps8"]
+[gd_scene load_steps=15 format=3 uid="uid://csnw3fffwyps8"]
 
-[ext_resource type="Texture2D" uid="uid://cqmovlmdugk2r" path="res://Sprites/guerrero_fuego-Sheet.png" id="1_52bj0"]
+[ext_resource type="Texture2D" uid="uid://cqmovlmdugk2r" path="res://assets/guerrero_fuego-Sheet.png" id="1_52bj0"]
 
 [sub_resource type="GDScript" id="GDScript_ubt07"]
 script/source = "extends CharacterBody2D
@@ -14,8 +14,17 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float):
-	velocity = dir * speed
-	move_and_slide()
+	if dir.x || dir.y:
+		$AnimatedSprite2D.play(\"caminar\")
+		velocity = dir * speed
+		move_and_slide()
+	else:
+		$AnimatedSprite2D.play(\"estatico\")
+		
+	if dir.x > 0:
+		$AnimatedSprite2D.scale.x = 0.3
+	if dir.x < 0:
+		$AnimatedSprite2D.scale.x = -0.3
 
 func _unhandled_input(_event: InputEvent):
 	dir.x = Input.get_axis(\"ui_left\",\"ui_right\")
@@ -39,6 +48,26 @@ region = Rect2(0, 216, 36, 36)
 atlas = ExtResource("1_52bj0")
 region = Rect2(0, 252, 36, 36)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvcwe"]
+atlas = ExtResource("1_52bj0")
+region = Rect2(0, 0, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udkku"]
+atlas = ExtResource("1_52bj0")
+region = Rect2(0, 36, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6to3w"]
+atlas = ExtResource("1_52bj0")
+region = Rect2(0, 72, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijpv3"]
+atlas = ExtResource("1_52bj0")
+region = Rect2(0, 108, 36, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_blks0"]
+atlas = ExtResource("1_52bj0")
+region = Rect2(0, 144, 36, 36)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_k2vbm"]
 animations = [{
 "frames": [{
@@ -56,6 +85,26 @@ animations = [{
 }],
 "loop": true,
 "name": &"caminar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvcwe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udkku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6to3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijpv3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_blks0")
+}],
+"loop": true,
+"name": &"estatico",
 "speed": 5.0
 }]
 
@@ -94,10 +143,10 @@ collision_mask = 13
 script = SubResource("GDScript_ubt07")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_k2vbm")
-animation = &"caminar"
-frame_progress = 0.960054
+animation = &"estatico"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
