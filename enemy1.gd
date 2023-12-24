@@ -20,7 +20,7 @@ var diambular: bool = false
 var oneshot = true
 func _ready():
 	padre = get_parent()
-	player = padre.get_node("Player") #obtengo la escena del player desde 
+	player = padre.get_node("PLayer") #obtengo la escena del player desde 
 	# 								   el arbol de escenas para poder acceder a su posicion
 	
 

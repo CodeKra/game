@@ -7,6 +7,8 @@ script/source = "extends CharacterBody2D
 class_name Player
 const speed = 250
 var dir : Vector2
+@onready var Sprite := $AnimatedSprite2D #Guardamos el ndo en una varible para
+#										 para que sea mas comodo trabajar
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -15,17 +17,17 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float):
 	if dir.x || dir.y:
-		$AnimatedSprite2D.play(\"caminar\")
+		Sprite.play(\"caminar\")
 		velocity = dir * speed
-		move_and_slide()
-	else:
-		$AnimatedSprite2D.play(\"estatico\")
 		
-	if dir.x > 0:
-		$AnimatedSprite2D.scale.x = 0.3
+	else:
+		Sprite.play(\"estatico\")
+		
 	if dir.x < 0:
-		$AnimatedSprite2D.scale.x = -0.3
-
+		Sprite.flip_h = true #si ve que si funcionaba lok
+	elif dir.x > 0:
+		Sprite.flip_h = false #me llamaron loco
+	move_and_slide()
 func _unhandled_input(_event: InputEvent):
 	dir.x = Input.get_axis(\"ui_left\",\"ui_right\")
 	dir.y = Input.get_axis(\"ui_up\",\"ui_down\")
@@ -109,8 +111,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fyc8e"]
-radius = 2.0
-height = 8.0
+radius = 7.0
+height = 26.0
 
 [sub_resource type="GDScript" id="GDScript_q8iov"]
 resource_name = "Temporizador"
@@ -143,20 +145,23 @@ collision_mask = 13
 script = SubResource("GDScript_ubt07")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-scale = Vector2(0.3, 0.3)
+texture_filter = 3
 sprite_frames = SubResource("SpriteFrames_k2vbm")
-animation = &"estatico"
+animation = &"caminar"
+frame_progress = 0.523332
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(0, 4)
 shape = SubResource("CapsuleShape2D_fyc8e")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
 
 [node name="temporizador" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = -13.0
+offset_top = -70.0
+offset_right = 27.0
+offset_bottom = -47.0
 text = "0:00"
 script = SubResource("GDScript_q8iov")
 TinicialS = 10

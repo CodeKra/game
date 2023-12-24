@@ -12,12 +12,10 @@ source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="World" type="Node2D"]
 
-[node name="enemy1" parent="." instance=ExtResource("1_ivdq2")]
-position = Vector2(238.001, 280.999)
-scale = Vector2(15, 15)
+[node name="PLayer" parent="." instance=ExtResource("1_72lsk")]
 
-[node name="Player" parent="." instance=ExtResource("1_72lsk")]
-position = Vector2(313, 365)
+[node name="enemy1" parent="." instance=ExtResource("1_ivdq2")]
+position = Vector2(80, 16)
 scale = Vector2(15, 15)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
